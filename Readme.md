@@ -8,6 +8,15 @@ The agents this client is being tested with can be [found here](https://github.c
 
 Follow along as I post about program on my [websites](https://apsquared.co) and my Bluesky account [@apsquared](https://bsky.app/profile/apsquared.bsky.social).
 
+## TODO
+- [ ] Clean up some of the code that is not needed
+- [ ] Test more streaming agents
+- [ ] Port client to Typescript
+
+## Commands
+
+`uv run src/run_client.py`
+
 ## Notes to self
 
 Activate venv
