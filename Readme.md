@@ -8,6 +8,9 @@ The agents this client is being tested with can be [found here](https://github.c
 
 Follow along as I post about program on my [websites](https://apsquared.co) and my Bluesky account [@apsquared](https://bsky.app/profile/apsquared.bsky.social).
 
+Disclaimer: I'm not an expert at Python or LangGraph, just a developer trying to play with AI Agents and hoping to help others.
+
+
 ## TODO
 - [ ] Clean up some of the code that is not needed
 - [ ] Test more streaming agents
