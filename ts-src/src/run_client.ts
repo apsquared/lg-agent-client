@@ -19,7 +19,19 @@ async function main() {
       max_personas: 2,
     };
 
+    const threadId = "123"
+
+    const response = await client.invoke(
+      null,
+      initialState,
+      OpenAIModelName.GPT_4O_MINI,
+      threadId
+    );
+
+    console.log(response);
+
     // Stream a response
+    /*
     console.log('\nStreaming response:');
     for await (const message of client.stream(
       null,
@@ -35,6 +47,7 @@ async function main() {
       }
     }
     console.log('\n');
+    */
 
   } catch (error) {
     console.error('Error:', error);

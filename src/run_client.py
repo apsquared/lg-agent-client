@@ -35,34 +35,44 @@ async def amain() -> None:
             print(f"ERROR: Unknown type - {type(message)}")
 
 
-def main() -> None:
-    #### SYNC ####
+
+def start_run() -> None:
     client = AgentClient(settings.BASE_URL)
+    initial_state = {
+        "appUrl": "https://www.tvfoodmaps.com",
+        "competitor_hint": "Flavortown USA",
+        "max_personas": 2,
+    }
+    result = client.start(state=initial_state)
+    run_id = result["run_id"]  # exact key may vary based on server implementation
+    print("Run ID: ", run_id)
 
-    print("Agent info:")
-    print(client.info)
+    # Wait for 1 minute
+    import time
+    time.sleep(30)
 
-    #print("Agent Response:")
-    #response = client.invoke(state={"appName": "social network for developer", "max_personas": 2})
-    #print(response)
+    # Check status
+    status = client.get_status(run_id)
+    print("Status: ", status)
+   
+    time.sleep(30)
 
-    print("\nStream example:")
-    for message in client.stream(state={"appName": "social network for developer", "max_personas": 2}):
-        print(message)
-        if isinstance(message, str):
-            print(message, flush=True, end="")
-        elif isinstance(message, ChatMessage):
-            print("\n", flush=True)
-            message.pretty_print()
-        elif isinstance(message, dict):
-            print(f"State update: {message}")
-        else:
-            print(f"ERROR: Unknown type - {type(message)}")
+    # Check status
+    status = client.get_status(run_id)
+    print("Status2: ", status)
+
+    time.sleep(30)
+
+    # Check status
+    status = client.get_status(run_id)
+    print("Status3: ", status)
+
 
 
 if __name__ == "__main__":
     #print("Running in sync mode")
     #main()
-    print("\n\n\n\n\n")
-    print("Running in async mode")
-    asyncio.run(amain())
+    #print("\n\n\n\n\n")
+    #print("Running in async mode")
+    #asyncio.run(amain())
+    start_run()

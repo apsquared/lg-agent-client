@@ -204,4 +204,57 @@ export class AgentClient {
       throw new AgentClientError(`Error: ${error}`);
     }
   }
+
+  /**
+   * Start an agent run asynchronously and return immediately.
+   * @param message The message to send to the agent
+   * @param state Initial state for state-based agents
+   * @param model LLM model to use for the agent
+   * @param threadId Thread ID for continuing a conversation
+   * @returns Response containing the run_id and other metadata
+   */
+  public async startAgentRun(
+    message?: string | null,
+    state?: Record<string, any> | null,
+    model?: AllModelEnum | null,
+    threadId?: string | null
+  ): Promise<Record<string, any>> {
+    if (!this.agent) {
+      throw new AgentClientError('No agent selected. Use updateAgent() to select an agent.');
+    }
+
+    const request: UserInput = { message, state };
+    if (threadId) {
+      request.thread_id = threadId;
+    }
+    if (model) {
+      request.model = model;
+    }
+
+    try {
+      const response = await this.axiosInstance.post(
+        `/${this.agent}/start`,
+        request
+      );
+      return response.data;
+    } catch (error) {
+      throw new AgentClientError(`Error: ${error}`);
+    }
+  }
+
+  /**
+   * Get the status of an agent run.
+   * @param runId The ID of the run to check
+   * @returns Status information about the run
+   */
+  public async getRunStatus(runId: string): Promise<Record<string, any>> {
+    try {
+      const response = await this.axiosInstance.get(
+        `/agent/${runId}/status`
+      );
+      return response.data;
+    } catch (error) {
+      throw new AgentClientError(`Error: ${error}`);
+    }
+  }
 } 

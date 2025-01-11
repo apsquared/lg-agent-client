@@ -322,3 +322,60 @@ class AgentClient:
             raise AgentClientError(f"Error: {e}")
 
         return ChatHistory.model_validate(response.json())
+
+    def startAgentRun(
+        self, message: str | None = None, state: dict[str, Any] | None = None, model: str | None = None, thread_id: str | None = None
+    ) -> dict[str, Any]:
+        """
+        Start an agent run asynchronously and return immediately.
+
+        Args:
+            message (str): The message to send to the agent
+            state (dict, optional): Initial state for state-based agents
+            model (str, optional): LLM model to use for the agent
+            thread_id (str, optional): Thread ID for continuing a conversation
+
+        Returns:
+            dict: Response containing the run_id and other metadata
+        """
+        if not self.agent:
+            raise AgentClientError("No agent selected. Use update_agent() to select an agent.")
+        request = UserInput(message=message, state=state)
+        if thread_id:
+            request.thread_id = thread_id
+        if model:
+            request.model = model
+        try:
+            response = httpx.post(
+                f"{self.base_url}/{self.agent}/start",
+                json=request.model_dump(),
+                headers=self._headers,
+                timeout=self.timeout,
+            )
+            response.raise_for_status()
+        except httpx.HTTPError as e:
+            raise AgentClientError(f"Error: {e}")
+
+        return response.json()
+
+    def getRunStatus(self, run_id: str) -> dict[str, Any]:
+        """
+        Get the status of an agent run.
+
+        Args:
+            run_id (str): The ID of the run to check
+
+        Returns:
+            dict: Status information about the run
+        """
+        try:
+            response = httpx.get(
+                f"{self.base_url}/agent/{run_id}/status",
+                headers=self._headers,
+                timeout=self.timeout,
+            )
+            response.raise_for_status()
+        except httpx.HTTPError as e:
+            raise AgentClientError(f"Error: {e}")
+
+        return response.json()
