@@ -25,7 +25,7 @@ class AgentClient:
 
     def __init__(
         self,
-        base_url: str = "http://localhost",
+        base_url: str = "http://localhost:8123",
         agent: str = None,
         timeout: float | None = None,
         get_info: bool = True,

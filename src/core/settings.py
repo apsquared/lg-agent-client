@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     MODE: str | None = None
 
     HOST: str = "0.0.0.0"
-    PORT: int = 80
+    PORT: int = 8123
 
     AUTH_SECRET: SecretStr | None = None
 

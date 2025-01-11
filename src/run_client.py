@@ -16,8 +16,14 @@ async def amain() -> None:
     #response = await client.ainvoke("Twitter engagement planner")
     #response.pretty_print()
 
+    initial_state = {
+        "appUrl": "https://www.tvfoodmaps.com",
+        "competitor_hint": "Flavortown USA",
+        "max_personas": 2,
+    }
+
     print("\nStream example:")
-    async for message in client.astream(state={"appName": "social network for developer", "max_personas": 2}):
+    async for message in client.astream(state=initial_state):
         if isinstance(message, str):
             print(message, flush=True, end="")
         elif isinstance(message, ChatMessage):
