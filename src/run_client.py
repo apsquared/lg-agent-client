@@ -43,7 +43,7 @@ def start_run() -> None:
         "competitor_hint": "Flavortown USA",
         "max_personas": 2,
     }
-    result = client.start(state=initial_state)
+    result = client.startAgentRun(state=initial_state)
     run_id = result["run_id"]  # exact key may vary based on server implementation
     print("Run ID: ", run_id)
 
@@ -52,19 +52,19 @@ def start_run() -> None:
     time.sleep(30)
 
     # Check status
-    status = client.get_status(run_id)
+    status = client.getRunStatus(run_id)
     print("Status: ", status)
    
     time.sleep(30)
 
     # Check status
-    status = client.get_status(run_id)
+    status = client.getRunStatus(run_id)
     print("Status2: ", status)
 
     time.sleep(30)
 
     # Check status
-    status = client.get_status(run_id)
+    status = client.getRunStatus(run_id)
     print("Status3: ", status)
 
 

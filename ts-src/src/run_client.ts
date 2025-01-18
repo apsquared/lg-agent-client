@@ -6,37 +6,41 @@ async function main() {
   // Initialize the client
   console.log('Initializing client...');
 
-  const client = new AgentClient();
+
 
   try {
     // Get available agents and models
     //force default agent
+    const baseUrl = 'http://my-agent-alb-1226714337.us-east-1.elb.amazonaws.com';
+    //const baseUrl = 'http://localhost:8123';
+    const client = new AgentClient(baseUrl);
     const info = await client.retrieveInfo();
 
     const initialState = {
-      appUrl: 'https://www.tvfoodmaps.com',
-      competitor_hint: 'Flavortown USA',
+      appUrl: 'https://www.tvfoodmaps.com/',
+      competitor_hint: 'Product Hunt',
       max_personas: 2,
     };
 
-    const threadId = "123"
+    const threadId = "123277233354"
 
-    const response = await client.invoke(
+    /*const response = await client.invoke(
       null,
       initialState,
       OpenAIModelName.GPT_4O_MINI,
       threadId
-    );
+    );*/
 
-    console.log(response);
+    //console.log(response);
 
     // Stream a response
-    /*
+    
     console.log('\nStreaming response:');
     for await (const message of client.stream(
       null,
       initialState,
-      OpenAIModelName.GPT_4O_MINI
+      OpenAIModelName.GPT_4O_MINI,
+      threadId
     )) {
       if (typeof message === 'string') {
         console.log(message);
@@ -47,7 +51,7 @@ async function main() {
       }
     }
     console.log('\n');
-    */
+    
 
   } catch (error) {
     console.error('Error:', error);
