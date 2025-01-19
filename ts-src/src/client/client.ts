@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import { config } from 'dotenv';
 
 import {
+  AgentState,
   ChatHistory,
   ChatHistoryInput,
   ChatMessage,
@@ -218,7 +219,7 @@ export class AgentClient {
     state?: Record<string, any> | null,
     model?: AllModelEnum | null,
     threadId?: string | null
-  ): Promise<Record<string, any>> {
+  ): Promise<AgentState> {
     if (!this.agent) {
       throw new AgentClientError('No agent selected. Use updateAgent() to select an agent.');
     }
@@ -247,7 +248,7 @@ export class AgentClient {
    * @param runId The ID of the run to check
    * @returns Status information about the run
    */
-  public async getRunStatus(runId: string): Promise<Record<string, any>> {
+  public async getRunStatus(runId: string): Promise<AgentState> {
     try {
       const response = await this.axiosInstance.get(
         `/agent/${runId}/status`

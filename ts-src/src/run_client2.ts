@@ -34,11 +34,11 @@ async function main() {
             console.log('Current status:', status.status);
             console.log('Current status:', status);
             
-            if (status.status === 'completed' || status.status === 'failed') {
+            if (status.status === 'completed' || status.status === 'error') {
                 isComplete = true;
                 console.log('Final status:', status);
-                if (status.status === 'completed' && status.response) {
-                    console.log('Agent response:', status.response);
+                if (status.status === 'completed') {
+                    console.log('Agent response:', status);
                 }
             } else {
                 // Wait 2 seconds before checking again

@@ -1,5 +1,22 @@
 import { AllModelEnum, OpenAIModelName } from './models';
 
+
+export enum AgentStatus {
+  RUNNING = "running",
+  COMPLETED = "completed",
+  ERROR = "error"
+}
+
+export interface AgentState {
+  run_id: string;
+  thread_id: string;
+  status: AgentStatus;
+  start_time: Date;
+  last_update: Date;
+  current_state: Record<string, any>;
+}
+
+
 /**
  * Info about an available agent.
  */
